@@ -6,7 +6,6 @@ import {
 	setSuggestedCategory,
 } from "../../../redux/slices/bookSlice";
 import BookCard from "../../../components/common/BookCard/BookCard";
-import { Link } from "react-router-dom";
 import Loader from "../../../components/common/Loader/Loader";
 
 export default function Suggested() {
@@ -21,16 +20,16 @@ export default function Suggested() {
 
 	return (
 		<section className="mb-[100px]">
-			<h2 className="text-xl font-semibold">Suggested for you</h2>
+			<h2 className="text-lg lg:text-xl font-semibold">Suggested for you</h2>
 			<p className="text-sm text-gray-500">Based on your recent activity</p>
 
 			<div className="mb-8 mt-4 flex items-center w-full justify-between">
-				<div>
+				<div className="space-y-2 lg:space-y-3">
 					{categories.map((cat) => (
 						<button
 							key={cat}
 							onClick={() => dispatch(setSuggestedCategory(cat))}
-							className={`capitalize mr-3 transition-all duration-300 ease-in-out  py-1 px-3 rounded-full text-sm border border-gray-200 ${
+							className={`capitalize mr-1 lg:mr-3 transition-all duration-300 ease-in-out  py-1 px-3 rounded-full text-sm border border-gray-200 ${
 								activeSuggestedCategory === cat
 									? "font-semibold bg-black text-gray-200"
 									: "font-normal bg-gray-100"
@@ -39,12 +38,6 @@ export default function Suggested() {
 						</button>
 					))}
 				</div>
-
-				<Link
-					to={""}
-					className="text-sm">
-					More categories
-				</Link>
 			</div>
 
 			{loading && (

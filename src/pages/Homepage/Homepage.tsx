@@ -87,7 +87,7 @@ export default function Homepage() {
 				{!searching && books && books.length > 0 && (
 					<>
 						<div className="flex flex-wrap items-center justify-between mb-4 gap-4">
-							<h2 className="font-semibold text-2xl">
+							<h2 className="font-semibold text-lg md:text-xl lg:text-2xl">
 								Showing search results for{" "}
 								<span className="text-gray-400">"{query}"</span>{" "}
 							</h2>
@@ -124,7 +124,7 @@ export default function Homepage() {
 				)}
 
 				{hasMore && books && books.length > 0 && (
-					<div className="flex items-center gap-4 justify-center mb-[100px] mt-[50px]">
+					<div className="flex items-center gap-4 justify-between md:justify-center mb-[100px] mt-[50px]">
 						<button
 							disabled={page === 0}
 							onClick={handlePrev}
@@ -133,7 +133,7 @@ export default function Homepage() {
 						</button>
 
 						<div>
-							<p>
+							<p className="hidden md:block">
 								Showing {page * 10} - {page * 10 + 10} of {totalItems} results
 								{page > 0 && ` (Page ${page + 1})`}
 							</p>

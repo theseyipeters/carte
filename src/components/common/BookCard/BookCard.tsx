@@ -1,30 +1,37 @@
 import { Link } from "react-router-dom";
 import type { Book } from "../../../types/book";
+import { setBook } from "../../../redux/slices/bookSlice";
+import { toggleBookDetails } from "../../../redux/slices/dialogSlice";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface BookCardProps {
 	book: Book;
 }
 
 export default function BookCard({ book }: BookCardProps) {
+	const dispatch = useAppDispatch();
 	return (
-		<div className="flex items-start gap-3 justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3">
+		<div
+			onClick={() => {
+				dispatch(setBook(book));
+				dispatch(toggleBookDetails(true));
+			}}
+			className="flex items-start gap-3 justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3">
 			<div className="w-[70%]">
-				{/* Authors */}
 				<p
 					title={book.authors.join(", ")}
 					className="text-xs text-gray-500 line-clamp-2">
 					{book.authors.join(", ")}
 				</p>
 
-				{/* Title */}
 				<Link
 					to={"/"}
-					className="font-semibold text-base line-clamp-1 hover:underline underline-offset-2 mt-2"
+					className="font-semibold text-base line-clamp-1 hover:underline underline-offset-2 mt-2 w-fit"
 					title={book.title}>
 					{book.title}
 				</Link>
 
-				{/* Meta */}
 				<div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-1">
 					{book.publishedDate && <span>{book.publishedDate.slice(0, 4)}</span>}
 					{book.categories?.[0] && <span>• {book.categories[0]}</span>}
@@ -36,20 +43,21 @@ export default function BookCard({ book }: BookCardProps) {
 					)}
 				</div>
 
-				{/* Description */}
 				<p className="text-sm text-gray-500 line-clamp-6 mt-2">
 					{book.description}
 				</p>
 
-				{/* Preview link */}
 				{book.previewLink && (
 					<a
 						href={book.previewLink}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center text-blue-500 text-xs mt-2 hover:underline">
-						{/* Preview <ExternalLinkIcon className="w-3 h-3 ml-1" /> */}{" "}
+						className="inline-flex items-center text-sm mt-4 hover:underline">
 						Preview
+						<Icon
+							icon={"tabler:external-link"}
+							className="ml-1"
+						/>
 					</a>
 				)}
 			</div>

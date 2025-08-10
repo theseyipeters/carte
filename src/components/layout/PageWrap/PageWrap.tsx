@@ -25,7 +25,7 @@ export default function PageWrap({ children }: PageLayoutProps) {
 					/>
 				</div>
 			</div>
-			<footer className="bg-black text-gray-300 h-[400px]"></footer>
+			{/* <footer className="bg-black text-gray-300 h-[400px]"></footer> */}
 
 			<BookDetails />
 		</div>

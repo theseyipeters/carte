@@ -176,6 +176,9 @@ const booksSlice = createSlice({
 		setBooks: (state, action) => {
 			state.books = action.payload;
 		},
+		setBook: (state, action) => {
+			state.book = action.payload;
+		},
 		setSuggestedCategory: (state, action: PayloadAction<string>) => {
 			state.activeSuggestedCategory = action.payload;
 		},
@@ -220,7 +223,12 @@ const booksSlice = createSlice({
 	},
 });
 
-export const { setSuggestedCategory, setBooks, setPage, setTotalItems } =
-	booksSlice.actions;
+export const {
+	setSuggestedCategory,
+	setBooks,
+	setBook,
+	setPage,
+	setTotalItems,
+} = booksSlice.actions;
 export { categories };
 export default booksSlice.reducer;

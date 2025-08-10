@@ -1,32 +1,37 @@
 import { Link } from "react-router-dom";
 import type { Book } from "../../../types/book";
 import { Icon } from "@iconify/react/dist/iconify.js";
-// import { StarIcon, ExternalLinkIcon } from "@heroicons/react/24/solid";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { setBook } from "../../../redux/slices/bookSlice";
+import { toggleBookDetails } from "../../../redux/slices/dialogSlice";
 
 interface BookCardProps {
 	book: Book;
 }
 
 export default function SearchResultBookCard({ book }: BookCardProps) {
+	const dispatch = useAppDispatch();
 	return (
-		<div className="flex items-center justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3">
+		<div
+			onClick={() => {
+				dispatch(setBook(book));
+				dispatch(toggleBookDetails(true));
+			}}
+			className="flex items-center justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3 gap-4">
 			<div className="w-[70%]">
-				{/* Authors */}
 				<p
 					title={book.authors.join(", ")}
 					className="text-xs text-gray-500 line-clamp-2">
 					{book.authors.join(", ")}
 				</p>
 
-				{/* Title */}
 				<Link
 					to={"/"}
-					className="font-semibold text-xl line-clamp-1 hover:underline underline-offset-2 mt-2 w-fit"
+					className="font-semibold text-lg md:text-xl line-clamp-1 hover:underline underline-offset-2 mt-2 w-fit"
 					title={book.title}>
 					{book.title}
 				</Link>
 
-				{/* Meta */}
 				<div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-1">
 					{book.publishedDate && <span>{book.publishedDate.slice(0, 4)}</span>}
 					{book.categories?.[0] && <span>• {book.categories[0]}</span>}
@@ -43,8 +48,7 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 					)}
 				</div>
 
-				{/* Description */}
-				<p className="text-base text-gray-500 line-clamp-4 mt-1">
+				<p className="text-sm md:text-base text-gray-500 line-clamp-4 mt-1">
 					{book.description}
 				</p>
 
