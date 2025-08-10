@@ -10,4 +10,5 @@
 
 body {
 	font-family: "Archivo", sans-serif;
+	overscroll-behavior: none;
 }

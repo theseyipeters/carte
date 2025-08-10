@@ -5,32 +5,52 @@ import type { Book } from "../../types/book";
 
 interface BooksState {
 	books: Book[] | null;
+	totalItems: number;
+	page: number;
 	book: Book | null;
-	freshReads: Book[] | null;
-	activeFreshCategory: string;
+	suggested: Book[] | null;
+	activeSuggestedCategory: string;
+	searching: boolean;
 	loading: boolean;
 	error: string | null;
 }
 
-const categories = ["fiction", "biography", "science", "history"];
+const categories = [
+	"fiction",
+	"biography",
+	"science",
+	"history",
+	"psychology",
+	"music",
+];
 
 const initialState: BooksState = {
 	books: null,
+	totalItems: 0,
+	page: 0,
 	book: null,
-	freshReads: null,
-	activeFreshCategory: categories[0],
+	suggested: null,
+	activeSuggestedCategory: categories[0],
+	searching: false,
 	loading: false,
 	error: null,
 };
 
 export const fetchBooks = createAsyncThunk(
 	"books/fetchBooks",
-	async (query: string, { rejectWithValue }) => {
+	async (
+		{ query, page = 1 }: { query: string; page?: number },
+		{ rejectWithValue }
+	) => {
 		try {
+			const maxResults = 10;
+			const startIndex = Math.max(0, page * maxResults);
+
 			const response = await API.get("/volumes", {
 				params: {
 					q: query,
-					maxResults: 10,
+					maxResults,
+					startIndex,
 				},
 			});
 
@@ -51,7 +71,58 @@ export const fetchBooks = createAsyncThunk(
 					previewLink: item.volumeInfo.previewLink || undefined,
 				})) || [];
 
-			return books;
+			return {
+				books,
+				totalItems: data.totalItems || 0,
+				page,
+			};
+		} catch (error: any) {
+			return rejectWithValue(
+				error.response?.data?.error || "Failed to fetch books"
+			);
+		}
+	}
+);
+export const loadBooks = createAsyncThunk(
+	"books/fetchBooks",
+	async (
+		{ query, page = 1 }: { query: string; page?: number },
+		{ rejectWithValue }
+	) => {
+		try {
+			const maxResults = 10;
+			const startIndex = Math.max(0, page * maxResults);
+
+			const response = await API.get("/volumes", {
+				params: {
+					q: query,
+					maxResults,
+					startIndex,
+				},
+			});
+
+			const data = response.data;
+
+			const books: Book[] =
+				data.items?.map((item: any) => ({
+					id: item.id,
+					title: item.volumeInfo.title,
+					authors: item.volumeInfo.authors || ["Unknown author"],
+					thumbnail: item.volumeInfo.imageLinks?.thumbnail || "",
+					description:
+						item.volumeInfo.description || "No description available",
+					publishedDate: item.volumeInfo.publishedDate || undefined,
+					categories: item.volumeInfo.categories || [],
+					pageCount: item.volumeInfo.pageCount || undefined,
+					averageRating: item.volumeInfo.averageRating || 4,
+					previewLink: item.volumeInfo.previewLink || undefined,
+				})) || [];
+
+			return {
+				books,
+				totalItems: data.totalItems || 0,
+				page,
+			};
 		} catch (error: any) {
 			return rejectWithValue(
 				error.response?.data?.error || "Failed to fetch books"
@@ -60,8 +131,8 @@ export const fetchBooks = createAsyncThunk(
 	}
 );
 
-export const fetchFreshReads = createAsyncThunk(
-	"books/fetchFreshReads",
+export const fetchSuggested = createAsyncThunk(
+	"books/fetchSuggested",
 	async (category: string, { rejectWithValue }) => {
 		try {
 			const response = await API.get("/volumes", {
@@ -105,42 +176,51 @@ const booksSlice = createSlice({
 		setBooks: (state, action) => {
 			state.books = action.payload;
 		},
-		setFreshCategory: (state, action: PayloadAction<string>) => {
-			state.activeFreshCategory = action.payload;
+		setSuggestedCategory: (state, action: PayloadAction<string>) => {
+			state.activeSuggestedCategory = action.payload;
+		},
+		setTotalItems: (state, action: PayloadAction<number>) => {
+			state.totalItems = action.payload;
+		},
+		setPage: (state, action: PayloadAction<number>) => {
+			state.page = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
 		builder
 			// Search books
 			.addCase(fetchBooks.pending, (state) => {
-				state.loading = true;
+				state.searching = true;
 				state.error = null;
 			})
 			.addCase(fetchBooks.fulfilled, (state, action) => {
-				state.loading = false;
-				state.books = action.payload;
+				state.searching = false;
+				state.books = action.payload.books;
+				state.totalItems = action.payload.totalItems;
+				state.page = action.payload.page;
 			})
 			.addCase(fetchBooks.rejected, (state, action) => {
-				state.loading = false;
+				state.searching = false;
 				state.error = action.payload as string;
 			})
 
 			// Fresh reads
-			.addCase(fetchFreshReads.pending, (state) => {
+			.addCase(fetchSuggested.pending, (state) => {
 				state.loading = true;
 				state.error = null;
 			})
-			.addCase(fetchFreshReads.fulfilled, (state, action) => {
+			.addCase(fetchSuggested.fulfilled, (state, action) => {
 				state.loading = false;
-				state.freshReads = action.payload;
+				state.suggested = action.payload;
 			})
-			.addCase(fetchFreshReads.rejected, (state, action) => {
+			.addCase(fetchSuggested.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload as string;
 			});
 	},
 });
 
-export const { setFreshCategory, setBooks } = booksSlice.actions;
+export const { setSuggestedCategory, setBooks, setPage, setTotalItems } =
+	booksSlice.actions;
 export { categories };
 export default booksSlice.reducer;

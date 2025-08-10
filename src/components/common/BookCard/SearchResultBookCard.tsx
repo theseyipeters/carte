@@ -54,7 +54,7 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 						href={book.previewLink}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center text-sm mt-2 hover:underline">
+						className="inline-flex items-center text-sm mt-4 hover:underline">
 						Preview
 						<Icon
 							icon={"tabler:external-link"}
