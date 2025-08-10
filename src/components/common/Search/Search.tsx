@@ -1,6 +1,7 @@
 import type { FormEvent } from "react";
 import { useAppDispatch } from "../../../hooks/hooks";
 import { setBooks } from "../../../redux/slices/bookSlice";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Search = ({
 	query,
@@ -26,12 +27,13 @@ const Search = ({
 
 				{query !== "" && (
 					<div
+						className="cursor-pointer"
 						onClick={(e) => {
 							e.preventDefault();
 							setQuery("");
 							dispatch(setBooks(null));
 						}}>
-						x
+						<Icon icon={"ic:round-close"} />
 					</div>
 				)}
 			</div>

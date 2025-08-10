@@ -47,7 +47,7 @@ export const fetchBooks = createAsyncThunk(
 					publishedDate: item.volumeInfo.publishedDate || undefined,
 					categories: item.volumeInfo.categories || [],
 					pageCount: item.volumeInfo.pageCount || undefined,
-					averageRating: item.volumeInfo.averageRating || undefined,
+					averageRating: item.volumeInfo.averageRating || 4,
 					previewLink: item.volumeInfo.previewLink || undefined,
 				})) || [];
 
@@ -68,7 +68,7 @@ export const fetchFreshReads = createAsyncThunk(
 				params: {
 					q: `subject:${category}`,
 					orderBy: "newest",
-					maxResults: 8,
+					maxResults: 6,
 				},
 			});
 

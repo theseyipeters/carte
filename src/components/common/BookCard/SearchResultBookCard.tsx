@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Book } from "../../../types/book";
+import { Icon } from "@iconify/react/dist/iconify.js";
 // import { StarIcon, ExternalLinkIcon } from "@heroicons/react/24/solid";
 
 interface BookCardProps {
@@ -20,7 +21,7 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 				{/* Title */}
 				<Link
 					to={"/"}
-					className="font-semibold text-xl line-clamp-1 hover:underline underline-offset-2 mt-2"
+					className="font-semibold text-xl line-clamp-1 hover:underline underline-offset-2 mt-2 w-fit"
 					title={book.title}>
 					{book.title}
 				</Link>
@@ -32,7 +33,11 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 					{book.pageCount && <span>• {book.pageCount} pages</span>}
 					{book.averageRating && (
 						<span className="flex items-center">
-							{/* <StarIcon className="w-4 h-4 text-yellow-500 mr-1" /> */}
+							<Icon
+								icon={"fe:star"}
+								color="#f7c632"
+								className="mr-1"
+							/>
 							{book.averageRating.toFixed(1)}
 						</span>
 					)}
@@ -49,8 +54,12 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 						href={book.previewLink}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center text-blue-500 text-xs mt-2 hover:underline">
-						{/* Preview <ExternalLinkIcon className="w-3 h-3 ml-1" /> */}
+						className="inline-flex items-center text-sm mt-2 hover:underline">
+						Preview
+						<Icon
+							icon={"tabler:external-link"}
+							className="ml-1"
+						/>
 					</a>
 				)}
 			</div>

@@ -60,7 +60,7 @@ export default function Homepage() {
 							<span className="text-gray-400">"{query}"</span>{" "}
 						</h2>
 						{/* <div className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(180px,1fr))]"> */}
-						<div className="flex flex-col w-full">
+						<div className="flex flex-col w-full mb-[100px]">
 							{books.map((book) => (
 								<SearchResultBookCard
 									key={book.id}
@@ -72,7 +72,7 @@ export default function Homepage() {
 				)}
 
 				{!loading && books && books.length === 0 && (
-					<p className="text-center text-gray-500">
+					<p className="text-center text-gray-500 mb-[100px]">
 						No books found for your search.
 					</p>
 				)}

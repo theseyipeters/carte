@@ -7,7 +7,7 @@ interface BookCardProps {
 
 export default function BookCard({ book }: BookCardProps) {
 	return (
-		<div className="flex items-center justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3">
+		<div className="flex items-start gap-3 justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3">
 			<div className="w-[70%]">
 				{/* Authors */}
 				<p
@@ -19,7 +19,7 @@ export default function BookCard({ book }: BookCardProps) {
 				{/* Title */}
 				<Link
 					to={"/"}
-					className="font-semibold text-xl line-clamp-1 hover:underline underline-offset-2 mt-2"
+					className="font-semibold text-base line-clamp-1 hover:underline underline-offset-2 mt-2"
 					title={book.title}>
 					{book.title}
 				</Link>
@@ -37,7 +37,7 @@ export default function BookCard({ book }: BookCardProps) {
 				</div>
 
 				{/* Description */}
-				<p className="text-base text-gray-500 line-clamp-4 mt-1">
+				<p className="text-sm text-gray-500 line-clamp-6 mt-2">
 					{book.description}
 				</p>
 
