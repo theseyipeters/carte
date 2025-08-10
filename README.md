@@ -1,69 +1,127 @@
-# React + TypeScript + Vite
+# 📚 CARTE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> _Your map to great books — discover your next great read, one page at a time._
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Overview
 
-## Expanding the ESLint configuration
+**CARTE** is a modern book discovery app built with **Vite + React + TypeScript**.
+It connects to the **Google Books API** to let users search for books, explore details, and keep discovering through an intuitive interface.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Whether you're after a classic novel, a trending bestseller, or a niche genre, CARTE helps you find it — _one page at a time_.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- 🔍 **Search** for books by title (powered by Google Books API)
+- 📄 **Detailed book cards** with title, author, cover image, and more
+- 📚 **Fresh Reads** section highlighting curated picks
+- ⏳ **Pagination / Load More** for long search results
+- 📱 **Responsive UI** — works beautifully on desktop and mobile
+- ⚡ Built for **speed** and **developer experience** with Vite & TypeScript
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework:** [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **State Management:** Redux Toolkit
+- **Styling:** Tailwind CSS
+- **Icons:** [Iconify](https://iconify.design/)
+- **API:** [Google Books API](https://developers.google.com/books)
+- **Fonts:** [Google Fonts](https://fonts.google.com/)
+
+---
+
+## 📦 Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/theseyipeters/carte.git
+cd carte
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Open in your browser:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🚀 Build for Production
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+---
+
+## 📂 Project Structure
+
+```
+src/
+ ├─ components/        # Reusable UI components
+ ├─ pages/             # Page-level components (Homepage, etc.)
+ ├─ redux/             # Redux slices & store setup
+ ├─ hooks/             # Custom React hooks
+ ├─ svgs/              # SVG assets
+ ├─ utils/             # Utility functions
+ └─ App.tsx            # Root application component
+```
+
+---
+
+## 🔗 Resources Used
+
+- **[Google Books API](https://developers.google.com/books)** — for book search and metadata
+- **[Google Fonts](https://fonts.google.com/)** — typography
+- **[Iconify](https://iconify.design/)** — icons
+
+---
+
+## 🧪 Testing
+
+Run the full test suite:
+
+```bash
+npm run test
+```
+
+Run in watch mode:
+
+```bash
+npm run test:watch
+```
+
+View coverage report:
+
+```bash
+npm run test:coverage
+```
+
+---
+
+**CARTE** — _Your map to great books_
