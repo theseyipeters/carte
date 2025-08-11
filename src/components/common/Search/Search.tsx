@@ -1,5 +1,5 @@
 import type { FormEvent } from "react";
-import { useAppDispatch } from "../../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { setBooks } from "../../../redux/slices/bookSlice";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
@@ -13,6 +13,7 @@ const Search = ({
 	onSearch: (e: FormEvent) => void;
 }) => {
 	const dispatch = useAppDispatch();
+	const { searching } = useAppSelector((state) => state.books);
 	return (
 		<form
 			onSubmit={onSearch}
@@ -39,8 +40,9 @@ const Search = ({
 			</div>
 			<button
 				type="submit"
-				className="bg-black text-white text-sm font-semibold h-full w-fit whitespace-nowrap py-2 px-4 rounded-md">
-				Find books
+				disabled={searching}
+				className="bg-black text-white text-sm font-semibold h-full w-fit whitespace-nowrap py-2 px-4 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed">
+				{searching ? "Finding..." : "Find books"}
 			</button>
 		</form>
 	);
