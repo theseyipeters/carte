@@ -61,7 +61,7 @@ export default function Homepage() {
 				<div className="flex flex-wrap items-center justify-center gap-1 mt-1 text-center">
 					<h1 className="font-bold">Your map to great books</h1>
 					<span>-</span>
-					<p className="text-gray-600">
+					<p className="text-gray-600 text-sm md:text-base">
 						Discover your next great read, one page at a time.
 					</p>
 				</div>
@@ -82,70 +82,99 @@ export default function Homepage() {
 						<Loader />
 					</div>
 				)}
-				{error && <p className="text-center text-red-500">{error}</p>}
+				<div className={` ${books && books.length > 0 ? "mb-[100px]" : ""}`}>
+					{error && <p className="text-center text-red-500">{error}</p>}
 
-				{!searching && books && books.length > 0 && (
-					<>
-						<div className="flex flex-wrap items-center justify-between mb-4 gap-4">
-							<h2 className="font-semibold text-lg md:text-xl lg:text-2xl">
-								Showing search results for{" "}
-								<span className="text-gray-400">"{query}"</span>{" "}
-							</h2>
+					{!searching && books && books.length > 0 && (
+						<>
+							<div className="flex flex-wrap items-center justify-between mb-4 gap-4">
+								<h2 className="font-semibold text-lg md:text-xl lg:text-2xl">
+									Showing search results for{" "}
+									<span className="text-gray-400">"{query}"</span>{" "}
+								</h2>
+								<div className="flex items-center gap-2">
+									{page !== 0 && (
+										<button
+											disabled={page === 0}
+											onClick={handlePrev}
+											className="p-1 border rounded-full text-gray-500 hover:bg-gray-100 cursor-pointer hover:text-gray-800">
+											<Icon
+												icon={"solar:arrow-left-outline"}
+												fontSize={14}
+											/>
+										</button>
+									)}
+									<p className="text-gray-500">
+										Showing {page * 10} -{" "}
+										{books.length < 10 ? books.length : page * 10 + 10} of{" "}
+										{books.length < 10 ? books.length : totalItems} results
+										{page > 0 && ` (Page ${page + 1})`}
+									</p>
+									{hasMore && (
+										<button
+											disabled={!hasMore}
+											onClick={handleNext}
+											className="p-1 border rounded-full text-gray-500 hover:bg-gray-100 cursor-pointer hover:text-gray-800">
+											<Icon
+												icon={"solar:arrow-right-outline"}
+												fontSize={14}
+											/>
+										</button>
+									)}
+								</div>
+							</div>
+							<div className="flex flex-col w-full ">
+								{books.map((book) => (
+									<SearchResultBookCard
+										key={book.id}
+										book={book}
+									/>
+								))}
+							</div>
+						</>
+					)}
 
-							<p className="text-gray-500">
-								Showing {page * 10} - {page * 10 + 10} of {totalItems} results
-								{page > 0 && ` (Page ${page + 1})`}
+					{!searching && books && books.length === 0 && (
+						<div className="flex items-center justify-center gap-2 h-[200px] text-gray-500">
+							<Icon
+								icon={"mage:book"}
+								fontSize={30}
+							/>
+							<p className="text-center ">
+								No results found for "{query}".
+								<span>
+									<button className="underline ml-1 text-black">
+										Try again
+									</button>
+								</span>
 							</p>
 						</div>
-						<div className="flex flex-col w-full ">
-							{books.map((book) => (
-								<SearchResultBookCard
-									key={book.id}
-									book={book}
-								/>
-							))}
+					)}
+
+					{hasMore && books && books.length > 0 && (
+						<div className="flex items-center gap-4 justify-between md:justify-center mt-[50px]">
+							<button
+								disabled={page === 0}
+								onClick={handlePrev}
+								className="px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30">
+								Prev
+							</button>
+
+							<div>
+								<p className="hidden md:block text-gray-500">
+									Showing {page * 10} - {page * 10 + 10} of {totalItems} results
+									{page > 0 && ` (Page ${page + 1})`}
+								</p>
+							</div>
+							<button
+								disabled={!hasMore}
+								onClick={handleNext}
+								className="px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer">
+								Next
+							</button>
 						</div>
-					</>
-				)}
-
-				{!searching && books && books.length === 0 && (
-					<div className="flex items-center justify-center gap-2 h-[200px] mb-[100px] text-gray-500">
-						<Icon
-							icon={"mage:book"}
-							fontSize={30}
-						/>
-						<p className="text-center ">
-							No results found for "{query}".
-							<span>
-								<button className="underline ml-1 text-black">Try again</button>
-							</span>
-						</p>
-					</div>
-				)}
-
-				{hasMore && books && books.length > 0 && (
-					<div className="flex items-center gap-4 justify-between md:justify-center mb-[100px] mt-[50px]">
-						<button
-							disabled={page === 0}
-							onClick={handlePrev}
-							className="px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30">
-							Prev
-						</button>
-
-						<div>
-							<p className="hidden md:block">
-								Showing {page * 10} - {page * 10 + 10} of {totalItems} results
-								{page > 0 && ` (Page ${page + 1})`}
-							</p>
-						</div>
-						<button
-							disabled={!hasMore}
-							onClick={handleNext}
-							className="px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer">
-							Next
-						</button>
-					</div>
-				)}
+					)}
+				</div>
 
 				<div className="space-y-4">
 					<Suggested />

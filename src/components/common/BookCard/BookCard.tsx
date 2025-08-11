@@ -17,7 +17,7 @@ export default function BookCard({ book }: BookCardProps) {
 				dispatch(setBook(book));
 				dispatch(toggleBookDetails(true));
 			}}
-			className="flex items-start gap-3 justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3">
+			className="flex items-start gap-3 justify-between flex-shrink-0 w-full overflow-hidden transition duration-300 ease-in-out border-b border-gray-300 py-3 hover:translate-y-[-10px] cursor-pointer">
 			<div className="w-[70%]">
 				<p
 					title={book.authors.join(", ")}

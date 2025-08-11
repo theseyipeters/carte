@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import type { Book } from "../../../types/book";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAppDispatch } from "../../../hooks/hooks";
@@ -12,12 +11,7 @@ interface BookCardProps {
 export default function SearchResultBookCard({ book }: BookCardProps) {
 	const dispatch = useAppDispatch();
 	return (
-		<div
-			onClick={() => {
-				dispatch(setBook(book));
-				dispatch(toggleBookDetails(true));
-			}}
-			className="flex items-center justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3 gap-4">
+		<div className="flex items-center justify-between flex-shrink-0 w-full overflow-hidden transition border-b border-gray-300 py-3 gap-4">
 			<div className="w-[70%]">
 				<p
 					title={book.authors.join(", ")}
@@ -25,12 +19,15 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 					{book.authors.join(", ")}
 				</p>
 
-				<Link
-					to={"/"}
-					className="font-semibold text-lg md:text-xl line-clamp-1 hover:underline underline-offset-2 mt-2 w-fit"
+				<div
+					onClick={() => {
+						dispatch(setBook(book));
+						dispatch(toggleBookDetails(true));
+					}}
+					className="font-semibold text-lg md:text-xl line-clamp-1 hover:underline underline-offset-2 mt-2 w-fit cursor-pointer"
 					title={book.title}>
 					{book.title}
-				</Link>
+				</div>
 
 				<div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 mt-1">
 					{book.publishedDate && <span>{book.publishedDate.slice(0, 4)}</span>}
@@ -69,7 +66,12 @@ export default function SearchResultBookCard({ book }: BookCardProps) {
 			</div>
 
 			{/* Thumbnail */}
-			<div className="w-[200px]">
+			<div
+				onClick={() => {
+					dispatch(setBook(book));
+					dispatch(toggleBookDetails(true));
+				}}
+				className="w-[200px] cursor-pointer">
 				{book.thumbnail ? (
 					<img
 						src={book.thumbnail}

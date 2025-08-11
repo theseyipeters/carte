@@ -65,6 +65,7 @@ export const fetchBooks = createAsyncThunk(
 					description:
 						item.volumeInfo.description || "No description available",
 					publishedDate: item.volumeInfo.publishedDate || undefined,
+					publisher: item.volumeInfo.publisher || "No publisher available",
 					categories: item.volumeInfo.categories || [],
 					pageCount: item.volumeInfo.pageCount || undefined,
 					averageRating: item.volumeInfo.averageRating || 4,
@@ -112,6 +113,7 @@ export const loadBooks = createAsyncThunk(
 					description:
 						item.volumeInfo.description || "No description available",
 					publishedDate: item.volumeInfo.publishedDate || undefined,
+					publisher: item.volumeInfo.publisher || "No publisher available",
 					categories: item.volumeInfo.categories || [],
 					pageCount: item.volumeInfo.pageCount || undefined,
 					averageRating: item.volumeInfo.averageRating || 4,
@@ -154,6 +156,7 @@ export const fetchSuggested = createAsyncThunk(
 					description:
 						item.volumeInfo.description || "No description available",
 					publishedDate: item.volumeInfo.publishedDate || undefined,
+					publisher: item.volumeInfo.publisher || "No publisher available",
 					categories: item.volumeInfo.categories || [],
 					pageCount: item.volumeInfo.pageCount || undefined,
 					averageRating: item.volumeInfo.averageRating || undefined,
