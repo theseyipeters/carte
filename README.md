@@ -15,9 +15,9 @@ Whether you're after a classic novel, a trending bestseller, or a niche genre, C
 
 ## Architecture/Design Decisions
 
-- I decided to make use of **Redux Toolkit** for state management as it supports the use of async thunks to handle asynchronous requests, loading states, and error management.
+- I decided to make use of **Redux Toolkit** for state management as it supports the use of async thunks to handle asynchronous requests, loading states, and error management. This helps keep our components clean and separates requests from it.
 
-- I also made use of **Tailwind CSS** to speed up styling, and handle responsive capabilities in a traceable and generic fashion.
+- I also made use of **Tailwind CSS** to speed up styling, and handle responsive capabilities in a traceable and generic fashion and especially because this is a time-sensitive project.
 
 - To show more book details, I decided to go for a Dialog as **Google Books API** already returns all the data we need per book in the `fetchBooks` request. Hence creating a new page and fetching a book by id wouldn't be neccessary, this way, users can stay in one page and see everything they need to see about a book within one page, especially considering it's a search interface, and they're looking for something. We don't want to break their flow.
 
